@@ -3,29 +3,59 @@
 .TopNavigation {
   background: color(gray, 1);
   height: 100%;
+  display: flex;
 }
 
 .IconLink {
   display: inline-block;
   vertical-align: middle;
-  padding: spacing(small) rem(11);
+  padding: spacing(small) rem(10);
+
+  // font-size: rem(28);
+  line-height: rem(24);
 
   color: color(gray, 5);
-  font-size: rem(15);
-  // line-height: rem(18);
+  transition: 0.15s;
 
   &:hover, &:active, &:focus {
-    color: color(gray, 2);
+    color: color(gray, 10);
   }
 }
 
 .Logo {
-  display: inline-block;
+  flex: 0 0 0;
   padding: rem(12) 0;
-  width: rem(250);
+  min-width: rem(250);
   text-align: center;
   height: 100%;
   opacity: 1;
   // background: darken(color(gray, 1), 0)
   border-right: 1px solid darken(color(gray, 1), 3);
+}
+
+.RightOptions {
+  flex: 1 0 0;
+  text-align: right;
+  padding: rem(12) spacing(larger);
+}
+
+.NotificationItem {
+  width: rem(460);
+  padding: spacing();
+  display: flex;
+  border-bottom: 1px solid color(gray, 8);
+}
+
+.NotificationIconWrapper {
+  flex: 0 0 0;
+  min-width: rem(42);
+  text-align: left;
+}
+
+.NotificationIcon {
+  color: color(gray, 4)
+}
+
+.NotificationContent {
+  flex: 1 0 0;
 }
