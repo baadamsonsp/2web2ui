@@ -1,9 +1,10 @@
 /* eslint-disable */
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm, formValueSelector } from 'redux-form';
-import { Button, Panel } from '@sparkpost/matchbox';
+import { Button, Panel, UnstyledLink } from '@sparkpost/matchbox';
 import { TextFieldWrapper, SelectWrapper } from 'src/components';
+import { Link } from 'react-router-dom';
 import { required, minLength, maxFileSize } from 'src/helpers/validation';
 import config from 'src/config';
 import styles from './SupportForm.module.scss';
@@ -14,9 +15,9 @@ const formName = 'supportForm';
 const types = [
   { label: 'Technical errors', value: 'Errors', messageLabel: 'Tell us more about your issue' },
   { label: 'Billing problems', value: 'Billing', messageLabel: 'Tell us more about your billing issue' },
-  { label: 'Canceling my account', value: 'Compliance-Cancel', messageLabel: 'Tell us why you are leaving' },
-  { label: 'Unsuspending my account', value: 'Compliance-Suspension', messageLabel: 'Why do you think your account should be unsuspended?' },
-  { label: 'Increasing my daily sending limits', value: 'Daily Limits', messageLabel: 'What limit do you need and why?' },
+  { label: 'Account cancellation', value: 'Compliance-Cancel', messageLabel: 'Tell us why you are leaving' },
+  { label: 'Account suspension', value: 'Compliance-Suspension', messageLabel: 'Why do you think your account should be unsuspended?' },
+  { label: 'Daily sending limit increase', value: 'Daily Limits', messageLabel: 'What limit do you need and why?' },
   { label: 'Another issue', value: 'Support', messageLabel: 'Tell us more about your issue' }
 ];
 
@@ -52,6 +53,11 @@ export class SupportForm extends Component {
 
     const selectedType = _.find(types, { value: subject });
     const messageLabel = _.get(selectedType, 'messageLabel', '');
+    const helpTextIfFree = (
+      <Fragment>
+        Additional technical support is available on paid plans. <UnstyledLink Component={Link} to='/account/billing/plan'>Ugrade now</UnstyledLink>.
+      </Fragment>
+    )
 
     return <div className={styles.SupportForm}>
       <Panel.Section>
@@ -62,7 +68,7 @@ export class SupportForm extends Component {
           <Field
             name='subject'
             label='I need help with...'
-            helpText='Additional support options are available on paid plans'
+            helpText={helpTextIfFree}
             inlineErrors={true}
             autoFocus={true}
             disabled={submitting}

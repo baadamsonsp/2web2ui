@@ -9,7 +9,7 @@
   transition: 0.2s;
 
   @media screen and (min-width: breakpoint(medium)) {
-    width: rem(220);
+    width: rem(250);
     transform: translate(0);
   }
 
@@ -43,14 +43,9 @@
 .wrapper {
   overflow-y: auto;
   height: 100vh;
-  background: color(gray, 1);
-}
-
-.logo {
-  height: rem(30);
-  margin-bottom: spacing();
-  text-align: center;
-  opacity: 0.9;
+  padding-top: rem(56);
+  background: color(gray, 9);
+  border-right: 1px solid darken(color(gray, 9), 3);
 }
 
 .list, .nestedList, .footer {
@@ -61,16 +56,16 @@
 
 .list {
   min-height: 100%;
-  padding-bottom: rem(130);
-  margin-bottom: rem(-130);
-  padding-top: spacing(larger);
+  padding-bottom: rem(100);
+  margin-bottom: rem(-100);
+  padding-top: rem(39);
 }
 
 .link, .link:visited {
   position: relative;
   display: block;
-  padding: spacing() spacing(large);
-  color: color(gray, 5);
+  padding: rem(6) rem(18);
+  color: color(gray, 2);
 
   text-decoration: none;
   border-bottom: none;
@@ -81,36 +76,23 @@
   -moz-osx-font-smoothing: grayscale;
 
   transition: 0.15s;
+  user-select: none;
 
   &:hover {
-    color: color(gray, 10);
+    color: color(gray, 0);
     cursor: pointer;
-
-    .chevron {
-      fill: color(gray, 10);
-    }
-
-    .icon {
-      fill: color(gray, 8);
-    }
+    .chevron { fill: color(gray, 1); }
+    .icon { fill: color(gray, 1); }
   }
 
   &:focus {
-    color: color(gray, 10);
-    outline: none;
+    color: color(gray, 0);
   }
 
   &.isActive {
-    color: color(gray, 10);
-    background: color(gray, 2);
-
-    .icon {
-      fill: color(gray, 9);
-    }
-
-    .chevron {
-      fill: color(gray, 10);
-    }
+    color: color(orange);
+    font-weight: 500;
+    .icon { fill: color(orange); }
   }
 
   &.hasChildren {
@@ -119,35 +101,43 @@
     }
   }
 
-  &.hasChildren.isOpen {
-    background: color(gray, 1);
+  &.hasChildren.isOpen.isActive {
+    color: color(gray, 2);
+    .icon { fill: color(gray, 2); }
+  }
 
+  &.hasChildren.isOpen {
     .chevron {
       transform: translate(0, -50%) rotate(-90deg);
     }
 
     & + .nestedList {
       display: block;
-      background: darken(color(gray, 1), 2);
     }
   }
 }
 
 .nestedList {
-  margin-bottom: 0;
+  margin-bottom: rem(11);
 }
 
 .nestedList .link {
-  padding: rem(12) spacing(large) rem(12) rem(54);
+  padding: rem(4) spacing(large) rem(4) rem(54);
+  color: color(gray, 2);
+  font-weight: 400;
+
+  &.isActive {
+    font-weight: 500;
+  }
 }
 
 .iconWrapper {
   display: inline-block;
-  width: rem(30);
+  width: rem(36);
 }
 
 .icon {
-  fill: color(gray, 4);
+  fill: color(gray, 5);
   transition: 0.1s;
 }
 
@@ -157,8 +147,8 @@
   right: rem(15);
   width: rem(24);
   height: rem(24);
-  transform: translate(0, -50%) rotate(0);
-  fill: color(gray, 4);
+  transform: translate(0, -50%) rotate(-90deg);
+  fill: color(gray, 6);
   transition: 0.1s;
 }
 

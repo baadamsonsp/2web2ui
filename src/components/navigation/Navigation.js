@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+/* eslint-disable */
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import classnames from 'classnames';
@@ -15,7 +16,7 @@ export class Navigation extends Component {
     open: false
   };
 
-  renderItems(items) {
+  renderItems (items) {
     return this.props.navItems.map((item, key) => (
       <Item {...item} location={this.props.location} key={key} />
     ));
@@ -25,7 +26,7 @@ export class Navigation extends Component {
     this.setState({ open: !this.state.open });
   }
 
-  render() {
+  render () {
     const navClasses = classnames(
       styles.navigation,
       this.state.open && styles.showNav
@@ -37,7 +38,7 @@ export class Navigation extends Component {
     );
 
     return (
-      <div>
+      <Fragment>
         <div
           className={overlayClasses}
           onClick={this.handleClick} />
@@ -45,7 +46,7 @@ export class Navigation extends Component {
         <nav className={navClasses}>
           <div className={styles.wrapper}>
             <ul className={styles.list}>
-              <div className={styles.logo}><SparkPost.Logo type='white' /></div>
+              {/* <div className={styles.logo}><SparkPost.Logo type='white' /></div> */}
               {this.renderItems()}
             </ul>
             <Footer />
@@ -56,13 +57,13 @@ export class Navigation extends Component {
             onClick={this.handleClick} />
         </nav>
 
-        <nav className={styles.bar}>
+        {/* <nav className={styles.bar}>
           <div className={styles.mobileLogo}><SparkPost.Logo type='white' /></div>
           <a className={styles.open} onClick={this.handleClick}>
             <span className={styles.hamburger} />
           </a>
-        </nav>
-      </div>
+        </nav> */}
+      </Fragment>
     );
   }
 }

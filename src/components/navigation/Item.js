@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import styles from './Navigation.module.scss';
 
 export class Item extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props);
 
     this.state = {
@@ -13,32 +13,32 @@ export class Item extends Component {
     };
   }
 
-  isActive() {
+  isActive () {
     const { to, location } = this.props;
     return location.pathname.includes(to);
   }
 
-  handleParentClick() {
+  handleParentClick () {
     this.setState({ open: !this.state.open });
   }
 
-  componentWillMount() {
+  componentWillMount () {
     if (this.isActive()) {
       this.setState({ open: true });
     }
   }
 
-  renderChildren() {
+  renderChildren () {
     const { children, location } = this.props;
 
     return (
       <ul className={styles.nestedList}>
-        { children.map((child, key) => <Item {...child} location={location} key={key} />) }
+        {children.map((child, key) => <Item {...child} location={location} key={key} />)}
       </ul>
     );
   }
 
-  render() {
+  render () {
     const {
       to,
       icon: Icon,
@@ -56,19 +56,19 @@ export class Item extends Component {
 
     return (
       <span>
-        { children
+        {children
           ? <li>
             <a onClick={() => this.handleParentClick()} className={linkClasses}>
-              <span className={styles.iconWrapper}><Icon size={18} className={styles.icon} /></span>
+              <span className={styles.iconWrapper}><Icon size={19} className={styles.icon} /></span>
               { label }
               <ChevronLeft className={styles.chevron} />
             </a>
-            { this.renderChildren() }
+            {this.renderChildren()}
           </li>
 
           : <li>
             <Link to={ to } className={linkClasses}>
-              { Icon && <span className={styles.iconWrapper}><Icon size={18} className={styles.icon} /></span> }
+              { Icon && <span className={styles.iconWrapper}><Icon size={19} className={styles.icon} /></span> }
               { label }
             </Link>
           </li>
