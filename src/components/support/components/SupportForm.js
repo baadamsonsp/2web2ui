@@ -13,12 +13,12 @@ import _ from 'lodash';
 
 const formName = 'supportForm';
 const types = [
-  { label: 'Technical errors', value: 'Errors', messageLabel: 'Tell us more about your issue' },
-  { label: 'Billing problems', value: 'Billing', messageLabel: 'Tell us more about your billing issue' },
+  // { label: 'Technical errors', value: 'Errors', messageLabel: 'Tell us more about your issue' },
+  // { label: 'Billing problems', value: 'Billing', messageLabel: 'Tell us more about your billing issue' },
   { label: 'Account cancellation', value: 'Compliance-Cancel', messageLabel: 'Tell us why you are leaving' },
   { label: 'Account suspension', value: 'Compliance-Suspension', messageLabel: 'Why do you think your account should be unsuspended?' },
-  { label: 'Daily sending limit increase', value: 'Daily Limits', messageLabel: 'What limit do you need and why?' },
-  { label: 'Another issue', value: 'Support', messageLabel: 'Tell us more about your issue' }
+  // { label: 'Daily sending limit increase', value: 'Daily Limits', messageLabel: 'What limit do you need and why?' },
+  // { label: 'Another issue', value: 'Support', messageLabel: 'Tell us more about your issue' }
 ];
 
 export class SupportForm extends Component {
@@ -55,7 +55,7 @@ export class SupportForm extends Component {
     const messageLabel = _.get(selectedType, 'messageLabel', '');
     const helpTextIfFree = (
       <Fragment>
-        Additional technical support is available on paid plans. <UnstyledLink Component={Link} to='/account/billing/plan'>Ugrade now</UnstyledLink>.
+        Additional technical support is available on paid plans. <UnstyledLink Component={Link} to='/account/billing/plan'>Upgrade now</UnstyledLink>.
       </Fragment>
     )
 

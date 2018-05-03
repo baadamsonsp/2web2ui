@@ -24,9 +24,8 @@
 
 .Logo {
   flex: 0 0 0;
-  padding: rem(12) 0;
+  padding: rem(12) spacing();
   min-width: rem(250);
-  text-align: center;
   height: 100%;
   opacity: 1;
   // background: darken(color(gray, 1), 0)
@@ -36,7 +35,7 @@
 .RightOptions {
   flex: 1 0 0;
   text-align: right;
-  padding: rem(12) spacing(larger);
+  padding: rem(11) spacing(larger);
 }
 
 .NotificationItem {
@@ -53,9 +52,17 @@
 }
 
 .NotificationIcon {
-  color: color(gray, 4)
+  color: color(gray, 3)
 }
 
 .NotificationContent {
   flex: 1 0 0;
+}
+
+.Upgrade {
+  margin-right: spacing();
+}
+
+.ProfileList {
+  width: rem(260);
 }

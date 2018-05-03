@@ -49,7 +49,7 @@ export class Navigation extends Component {
               {/* <div className={styles.logo}><SparkPost.Logo type='white' /></div> */}
               {this.renderItems()}
             </ul>
-            <Footer />
+            {/* <Footer /> */}
           </div>
           <Close
             className={styles.close}
