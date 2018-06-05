@@ -1,8 +1,10 @@
+/* eslint-disable */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { TableCollection, ApiErrorBanner, Loading, SubaccountTag } from 'src/components';
 import { Templates } from 'src/components/images';
-import { Page } from '@sparkpost/matchbox';
+import { Page, Button, Popover, ActionList, Tag } from '@sparkpost/matchbox';
+import { ExpandMore, ModeEdit } from '@sparkpost/matchbox-icons';
 import Editor from './components/Editor'; // async, for preload
 
 import { format } from 'date-fns';
@@ -33,10 +35,13 @@ export default class ListPage extends Component {
 
   getRowData = ({ published, id, name, last_update_time, subaccount_id, shared_with_subaccounts }) => {
     const row = [
-      <Link to={`/templates/edit/${id}${setSubaccountQuery(subaccount_id)}`}>{name}</Link>,
-      id,
-      published ? 'Published' : 'Draft',
-      format(last_update_time, 'MMM D, YYYY [at] h:mma')
+      // <Link to={`/templates/edit/${id}${setSubaccountQuery(subaccount_id)}`}>{name}</Link>,
+      <React.Fragment>
+        <div style={{ display: 'block', lineHeight: '1.2em' }}><strong>{name}</strong></div>
+        <small><em>ID:{id}</em></small>
+      </React.Fragment>,
+      // id,
+      <Tag color={published ? 'navy' : 'yellow'}>{published ? 'Published' : 'Draft'}</Tag>
     ];
 
     if (this.props.hasSubaccounts) {
@@ -46,6 +51,28 @@ export default class ListPage extends Component {
       row.push(tag);
     }
 
+    row.push(<small>{format(last_update_time, 'MMM D, YYYY [at] h:mma')}</small>);
+
+    row.push(
+      <div style={{ textAlign: 'right' }}>
+        <Button.Group>
+          <Button size='small'>Edit</Button>
+          <Popover
+            left
+            trigger={<Button size='small'><ExpandMore/></Button>}>
+            <ActionList
+              actions={[
+                { content: 'Edit Draft', section: 1 },
+                { content: 'View Published', section: 1 },
+                { content: 'Preview & Send', section: 1 },
+                { content: 'Delete', section: 2 }
+              ]}
+            />
+          </Popover>
+        </Button.Group>
+      </div>
+    )
+
     return row;
   }
 
@@ -53,15 +80,18 @@ export default class ListPage extends Component {
     const { hasSubaccounts } = this.props;
 
     const columns = [
-      { label: 'Name', width: '22%', sortKey: 'name' },
-      { label: 'ID', width: '22%', sortKey: 'id' },
-      { label: 'Status', width: '15%', sortKey: 'published' },
-      { label: 'Updated', sortKey: 'last_update_time' }
+      { label: 'Name', width: '28%', sortKey: 'name' },
+      // { label: 'ID', width: '22%', sortKey: 'id' },
+      { label: 'Status', width: '20%', sortKey: 'published' }
     ];
 
     if (hasSubaccounts) {
-      columns.push({ label: 'Subaccount', width: '20%', sortKey: (template) => [template.subaccount_id, template.shared_with_subaccounts]});
+      columns.push({ label: 'Subaccount', width: '22%', sortKey: (template) => [template.subaccount_id, template.shared_with_subaccounts]});
     }
+
+    columns.push({ label: 'Last Updated', sortKey: 'last_update_time' })
+
+    columns.push(null)
 
     return columns;
   }
