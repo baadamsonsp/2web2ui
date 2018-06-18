@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import { Grid, Panel } from '@sparkpost/matchbox';
+import { Grid, Panel, Tabs } from '@sparkpost/matchbox';
 import { Loading, PieChart } from 'src/components';
 import { generateColors } from 'src/helpers/color';
 import styles from './BounceChart.module.scss';
@@ -11,10 +11,16 @@ import { safeRate } from 'src/helpers/math';
 const primaryColor = '#DB2F3D';
 const secondaryColor = '#37aadc';
 
+const fakeData = [
+  { name: 'Admin Bounce', count: 249 },
+  { name: 'Smart Send Suppression', count: 84 }
+];
+
 export default class BounceChart extends Component {
   state = {
     hoveredItem: null,
-    active: null
+    active: null,
+    tab: 0
   };
 
   /**
@@ -24,13 +30,17 @@ export default class BounceChart extends Component {
    */
   handleMouseOver = (e, hoverSet) => {
     const { categories, types } = this.props;
-    const { active } = this.state;
+    const { active, tab } = this.state;
     const { name, count } = e;
 
     let dataSet = hoverSet === 'primary' ? categories : types;
 
     if (active) {
       dataSet = active.children;
+    }
+
+    if (tab === 1) {
+      dataSet = fakeData;
     }
 
     const hoveredItem = {
@@ -62,16 +72,22 @@ export default class BounceChart extends Component {
 
   getLabelProps = () => {
     const { aggregates } = this.props;
-    const { hoveredItem } = this.state;
+    const { hoveredItem, tab } = this.state;
+
+    let defaultLabel = { name: 'Bounce Rate', value: formatPercent(safeRate(aggregates.countBounce, aggregates.countSent)) };
+
+    if (tab === 1) {
+      defaultLabel = { name: 'Bounce Rate', value: formatPercent(safeRate(aggregates.countAdminBounce, aggregates.countTargeted)) };
+    }
 
     return hoveredItem
-      ? { name: hoveredItem.name, value: formatPercent(safeRate(hoveredItem.count, aggregates.countBounce)) }
-      : { name: 'Bounce Rate', value: formatPercent(safeRate(aggregates.countBounce, aggregates.countSent)) };
+      ? { name: hoveredItem.name, value: formatPercent(safeRate(hoveredItem.count, tab === 1 ? aggregates.countBounce : aggregates.countAdminBounce)) }
+      : defaultLabel;
   }
 
   getLegendHeaderData = () => {
     const { aggregates } = this.props;
-    const { active } = this.state;
+    const { active, tab } = this.state;
 
     // Header with breadcrumb & active data
     if (active) {
@@ -79,6 +95,13 @@ export default class BounceChart extends Component {
         { name: 'Bounces', breadcrumb: true, onClick: this.handleBreadcrumb, count: aggregates.countBounce },
         { name: 'Sent', count: aggregates.countSent },
         { name: active.name, count: active.count }
+      ];
+    }
+
+    if (tab === 1) {
+      return [
+        { name: 'Admin Bounces', count: aggregates.countAdminBounce },
+        { name: 'Targeted', count: aggregates.countTargeted }
       ];
     }
 
@@ -92,7 +115,7 @@ export default class BounceChart extends Component {
   // Gets primary and secondary data for BounceChart & Legend
   getData = () => {
     const { categories, types } = this.props;
-    const { active } = this.state;
+    const { active, tab } = this.state;
 
     let primaryData = categories;
     let secondaryData = types;
@@ -102,13 +125,22 @@ export default class BounceChart extends Component {
       secondaryData = null;
     }
 
+    if (tab === 1) {
+      primaryData = fakeData;
+      secondaryData = null;
+    }
+
     return {
       primaryData: generateColors(primaryData, { baseColor: primaryColor, rotate: 80, saturate: 0.06 }),
       secondaryData: secondaryData && generateColors(secondaryData, { baseColor: secondaryColor })
     };
   }
 
-  render () {
+  handleTab = (index) => {
+    this.setState({ tab: index });
+  }
+
+  render() {
     const { loading } = this.props;
 
     if (loading) {
@@ -116,30 +148,33 @@ export default class BounceChart extends Component {
     }
 
     return (
-      <Panel title='Bounce Rates' sectioned>
-        <Grid>
-          <Grid.Column xs={12} lg={5}>
-            <div className={styles.ChartWrapper}>
-              <PieChart.Chart
+      <React.Fragment>
+        <Tabs tabs={[{ content: 'Bounces', onClick: () => this.handleTab(0) }, { content: 'Admin Bounces', onClick: () => this.handleTab(1) }]} selected={this.state.tab} />
+        <Panel sectioned>
+          <Grid>
+            <Grid.Column xs={12} lg={5}>
+              <div className={styles.ChartWrapper}>
+                <PieChart.Chart
+                  {...this.getData()}
+                  hoveredItem={this.state.hoveredItem}
+                  onMouseOver={this.handleMouseOver}
+                  onMouseOut={this.handleMouseOut}
+                  onClick={this.handleClick} />
+                <PieChart.ActiveLabel {...this.getLabelProps()}/>
+              </div>
+            </Grid.Column>
+            <Grid.Column xs={12} lg={7}>
+              <PieChart.Legend
+                headerData={this.getLegendHeaderData()}
                 {...this.getData()}
                 hoveredItem={this.state.hoveredItem}
                 onMouseOver={this.handleMouseOver}
                 onMouseOut={this.handleMouseOut}
                 onClick={this.handleClick} />
-              <PieChart.ActiveLabel {...this.getLabelProps()}/>
-            </div>
-          </Grid.Column>
-          <Grid.Column xs={12} lg={7}>
-            <PieChart.Legend
-              headerData={this.getLegendHeaderData()}
-              {...this.getData()}
-              hoveredItem={this.state.hoveredItem}
-              onMouseOver={this.handleMouseOver}
-              onMouseOut={this.handleMouseOut}
-              onClick={this.handleClick} />
-          </Grid.Column>
-        </Grid>
-      </Panel>
+            </Grid.Column>
+          </Grid>
+        </Panel>
+      </React.Fragment>
     );
   }
 }
