@@ -54,6 +54,7 @@
     "classnames": "^2.2.5",
     "color": "^3.0.0",
     "copy-to-clipboard": "^3.0.8",
+    "csvtojson": "^2.0.4",
     "date-fns": "^1.28.5",
     "downshift": "^1.28.1",
     "email-addresses": "^3.0.1",
