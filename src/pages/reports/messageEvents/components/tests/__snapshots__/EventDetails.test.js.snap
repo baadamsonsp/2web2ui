@@ -52,6 +52,16 @@ exports[`EventDetails Component should render with all props 1`] = `
         hideCopy={false}
         value="{\\"key1\\":\\"val1\\",\\"key2\\":[\\"an\\",\\"arrray\\"],\\"type\\":\\"bounce\\"}"
       />
+      <Panel
+        sectioned={true}
+        title="Map"
+      >
+        <img
+          src="https://maps.googleapis.com/maps/api/staticmap?&zoom=13&size=300x150&maptype=roadmap
+&markers=color:blue%7Clabel:S%7C34.461,-84.4278
+&key=AIzaSyCPEyzwYdKNq-lsqOn7fcYivTWpuZirWNI"
+        />
+      </Panel>
     </LabelledValue>
   </Panel.Section>
 </Panel>
@@ -70,6 +80,16 @@ exports[`EventDetails Component should render with no props 1`] = `
         hideCopy={false}
         value="{}"
       />
+      <Panel
+        sectioned={true}
+        title="Map"
+      >
+        <img
+          src="https://maps.googleapis.com/maps/api/staticmap?&zoom=13&size=300x150&maptype=roadmap
+&markers=color:blue%7Clabel:S%7C34.461,-84.4278
+&key=AIzaSyCPEyzwYdKNq-lsqOn7fcYivTWpuZirWNI"
+        />
+      </Panel>
     </LabelledValue>
   </Panel.Section>
 </Panel>

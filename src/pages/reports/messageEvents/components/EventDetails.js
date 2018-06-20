@@ -13,11 +13,27 @@ class EventDetails extends Component {
   renderRow = ({ value, label, key }) => {
     // Renders value in a read only textfield
     if (typeof value === 'object') {
-      return (
-        <LabelledValue key={key} label={label}>
-          <CopyField hideCopy value={JSON.stringify(value)} />
-        </LabelledValue>
-      );
+      if (key === 'geo_ip') {
+        //define the coordinates
+        const long = value.longitude;
+        const lat = value.latitude;
+
+        //image with the coordinates applied to the url
+        const image = `https://maps.googleapis.com/maps/api/staticmap?&zoom=13&size=300x150&maptype=roadmap&markers=color:blue%7Clabel:S%7C${lat},${long}&key=AIzaSyCPEyzwYdKNq-lsqOn7fcYivTWpuZirWNI`;
+        return (
+          <LabelledValue key={key} label={label}>
+            <CopyField hideCopy value={JSON.stringify(value)} />
+            <img src = {image}/>
+          </LabelledValue>
+
+        );
+      } else {
+        return (
+          <LabelledValue key={key} label={label}>
+            <CopyField hideCopy value={JSON.stringify(value)} />
+          </LabelledValue>
+        );
+      }
     }
 
     return <LabelledValue key={key} label={label} value={value} />;
@@ -49,11 +65,16 @@ class EventDetails extends Component {
     return (
       <Panel title='Event Details'>
         <Panel.Section>
-          { this.renderDetails(detailsToRender) }
+          {this.renderDetails(detailsToRender)}
         </Panel.Section>
         <Panel.Section>
           <LabelledValue label='Raw Json'>
             <CopyField value={JSON.stringify(detailsToRender)}/>
+            <Panel title='Map' sectioned>
+              {<img src = 'https://maps.googleapis.com/maps/api/staticmap?&zoom=13&size=300x150&maptype=roadmap
+&markers=color:blue%7Clabel:S%7C34.461,-84.4278
+&key=AIzaSyCPEyzwYdKNq-lsqOn7fcYivTWpuZirWNI'/>
+              }</Panel>
           </LabelledValue>
         </Panel.Section>
       </Panel>
