@@ -19,11 +19,11 @@ class EventDetails extends Component {
         const lat = value.latitude;
 
         //image with the coordinates applied to the url
-        const image = `https://maps.googleapis.com/maps/api/staticmap?&zoom=13&size=300x150&maptype=roadmap&markers=color:blue%7Clabel:S%7C${lat},${long}&key=AIzaSyCPEyzwYdKNq-lsqOn7fcYivTWpuZirWNI`;
+        const dynmap = `https://www.google.com/maps/embed/v1/place?key=AIzaSyCPEyzwYdKNq-lsqOn7fcYivTWpuZirWNI&q=${lat},${long}`;
         return (
           <LabelledValue key={key} label={label}>
             <CopyField hideCopy value={JSON.stringify(value)} />
-            <img src = {image}/>
+            <iframe src= {dynmap}/>
           </LabelledValue>
 
         );
@@ -70,11 +70,6 @@ class EventDetails extends Component {
         <Panel.Section>
           <LabelledValue label='Raw Json'>
             <CopyField value={JSON.stringify(detailsToRender)}/>
-            <Panel title='Map' sectioned>
-              {<img src = 'https://maps.googleapis.com/maps/api/staticmap?&zoom=13&size=300x150&maptype=roadmap
-&markers=color:blue%7Clabel:S%7C34.461,-84.4278
-&key=AIzaSyCPEyzwYdKNq-lsqOn7fcYivTWpuZirWNI'/>
-              }</Panel>
           </LabelledValue>
         </Panel.Section>
       </Panel>
