@@ -1,4 +1,4 @@
-import { Home, InsertChart, Code, MailOutline, Language, Settings } from '@sparkpost/matchbox-icons';
+import { Home, InsertChart, Code, MailOutline, Language, Settings, Compare } from '@sparkpost/matchbox-icons';
 
 export default [
   {
@@ -65,6 +65,11 @@ export default [
     label: 'Webhooks',
     to: '/webhooks',
     icon: Language
+  },
+  {
+    label: 'AB Testing',
+    to: '/ab-testing',
+    icon: Compare
   },
   {
     label: 'Settings',

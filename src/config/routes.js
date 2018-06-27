@@ -25,6 +25,9 @@ import {
   PremiumSupportPage
 } from 'src/pages';
 
+import TestingListPage from 'src/pages/abTesting/ListPage';
+import TestingDetailPage from 'src/pages/abTesting/DetailsPage';
+
 import LogoutPage from 'src/pages/logout/LogoutPage';
 
 import onboarding from 'src/pages/onboarding';
@@ -525,6 +528,19 @@ const routes = [
     layout: App,
     title: 'Edit IP Pool',
     supportDocSearch: 'ip pool'
+  },
+  {
+    path: '/ab-testing',
+    component: TestingListPage,
+    layout: App,
+    title: 'AB Testing',
+    // supportDocSearch: 'ip pool'
+  },
+  {
+    path: '/ab-testing/:id/:version?',
+    component: TestingDetailPage,
+    layout: App,
+    title: 'AB Testing',
   },
   {
     path: '/onboarding/plan',
