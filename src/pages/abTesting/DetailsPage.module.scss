@@ -1,6 +1,13 @@
 @import '~@sparkpost/matchbox/src/styles/config.scss';
 
-.Default {
-  margin-bottom: 0;
-  color: color(red);
+.SmallHeader {
+  // margin-bottom: spacing();
+  // color: color(orange);
+  font-size: rem(14);
+}
+
+.HelpText {
+  word-break: normal;
+  word-wrap: normal;
+  font-size: rem(14);
 }

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { TableCollection } from 'src/components';
 import { Page, UnstyledLink, Button, Popover, ActionList } from '@sparkpost/matchbox';
 import { MoreHoriz } from '@sparkpost/matchbox-icons';
-import Status from './components/Status';
+import StatusTag from './components/StatusTag';
 import { formatDate } from 'src/helpers/date';
 
 import data from './data'; // fake data
@@ -17,20 +17,26 @@ class ListPage extends Component {
 
     const actions = [
       {
-        content: status === 'scheduled' ? 'Modify Test' : 'View Test',
+        content: 'Edit Test',
         to: `/ab-testing/${id}`,
         component: Link,
+        visible: status === 'scheduled' || status === 'draft',
         section: 1
       },
       {
-        content: 'View Results',
-        visible: status === 'completed',
+        content: 'View Test',
+        visible: status === 'running' || status === 'cancelled' || status === 'completed',
         section: 1
       },
       {
-        content: 'Create New Version',
+        content: 'Edit and Rerun Test',
         visible: status === 'completed' || status === 'cancelled',
         section: 1
+      },
+      {
+        content: 'Cancel Test',
+        visible: status === 'running',
+        section: 2
       },
       {
         content: 'Delete Test',
@@ -49,7 +55,7 @@ class ListPage extends Component {
         </p>
         <p className={styles.Id}>ID: {id}</p>
       </React.Fragment>,
-      <Status status={status}/>,
+      <StatusTag status={status}/>,
       <p className={styles.Template}>{template}</p>,
       <p className={styles.LastUpdated}>{formatDate(updated_at)}</p>,
       <div style={{ textAlign: 'right' }}>
@@ -64,15 +70,15 @@ class ListPage extends Component {
     const columns = [
       { label: 'Name', sortKey: 'name' },
       { label: 'Status', sortKey: 'status' },
-      { label: 'Default or Winning Template', sortKey: (i) => i.winning_template_id || i.default_template.template_id },
+      { label: 'Template', sortKey: (i) => i.winning_template_id || i.default_template.template_id },
       { label: 'Last Modified', sortKey: 'updated_at' },
       null
     ];
 
     return (
       <Page
-        title='AB Testing'
-        primaryAction={{ content: 'Create a New Test'}} >
+        title='A/B Testing'
+        primaryAction={{ content: 'Create a New A/B Test', to: '/ab-testing/create', component: Link }} >
 
         <TableCollection
           columns={columns}

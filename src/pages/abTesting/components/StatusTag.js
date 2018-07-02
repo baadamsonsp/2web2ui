@@ -2,7 +2,7 @@ import React from 'react';
 import { Tag } from '@sparkpost/matchbox';
 import { snakeToFriendly } from 'src/helpers/string';
 
-const Status = ({ status }) => {
+const StatusTag = ({ status }) => {
   let tagColor = null;
 
   if (status === 'running') {
@@ -10,10 +10,10 @@ const Status = ({ status }) => {
   }
 
   if (status === 'completed') {
-    tagColor = 'blue'
+    tagColor = 'navy'
   }
 
   return <Tag color={tagColor}>{snakeToFriendly(status)}</Tag>;
 }
 
-export default Status;
+export default StatusTag;

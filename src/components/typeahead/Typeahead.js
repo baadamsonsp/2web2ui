@@ -24,7 +24,7 @@ export class Typeahead extends Component {
     clearSelection,
     isOpen
   }) => {
-    const { name, results, disabled, label, placeholder = (isOpen ? 'Type to search' : 'None'), error, helpText, itemToString, renderItem } = this.props;
+    const { name, results, disabled, label, placeholder = (isOpen ? 'Type to search' : 'None'), error, helpText, itemToString, renderItem, showClear = true } = this.props;
 
     const matches = sortMatch(
       results,
@@ -44,7 +44,7 @@ export class Typeahead extends Component {
     });
 
     const textFieldProps = getInputProps({
-      connectRight: selectedItem && !disabled ? this.renderClearButton(clearSelection) : null,
+      connectRight: ((selectedItem && !disabled) && showClear) ? this.renderClearButton(clearSelection) : null,
       readOnly: !!selectedItem,
       disabled,
       id: name,
@@ -66,7 +66,8 @@ export class Typeahead extends Component {
   };
 
   renderClearButton(clearSelection) {
-    return <Button onClick={clearSelection}>Clear</Button>;
+    const { clearText = 'Clear', showClear } = this.props;
+    return <Button onClick={clearSelection}>{clearText}</Button>;
   }
 
   render() {

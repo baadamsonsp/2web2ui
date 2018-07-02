@@ -113,20 +113,23 @@ export default class AppDatePicker extends Component {
     const selectedRange = showDatePicker ? 'custom' : this.props.relativeRange;
 
     // allow for prop-level override of "now" (DI, etc.)
-    const { now = new Date(), relativeDateOptions = [], disabled, datePickerProps = {}, dateFieldFormat } = this.props;
+    const { helpText, left, now = new Date(), relativeDateOptions = [], disabled, datePickerProps = {}, dateFieldFormat } = this.props;
     const dateFormat = dateFieldFormat || this.DATE_FORMAT;
 
-    const rangeSelect = <Select
+    const rangeSelect = relativeDateOptions.length ? <Select
       options={getRelativeDateOptions(relativeDateOptions)}
       onChange={this.handleSelectRange}
       value={selectedRange}
-      disabled={disabled} />;
+      disabled={disabled} /> : null;
 
     const dateField = <TextField
       labelHidden={true}
+      helpText={helpText}
+      disabled={disabled}
       onClick={this.showDatePicker}
-      connectLeft={rangeSelect}
-      value={`${format(from, dateFormat)} – ${format(to, dateFormat)}`}
+      connectLeft={rangeSelect ? rangeSelect : null}
+      placeholder='Select dates'
+      value={(to && from) ? `${format(from, dateFormat)} – ${format(to, dateFormat)}` : null}
       readOnly />;
 
     return (
@@ -135,7 +138,7 @@ export default class AppDatePicker extends Component {
         className={styles.Popover}
         trigger={dateField}
         onClose={this.cancelDatePicker}
-        open={this.state.showDatePicker} >
+        open={this.state.showDatePicker} left={left}>
 
         <Datepicker
           numberOfMonths={2}

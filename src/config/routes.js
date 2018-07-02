@@ -27,6 +27,7 @@ import {
 
 import TestingListPage from 'src/pages/abTesting/ListPage';
 import TestingDetailPage from 'src/pages/abTesting/DetailsPage';
+import TestingCreatePage from 'src/pages/abTesting/CreatePage';
 
 import LogoutPage from 'src/pages/logout/LogoutPage';
 
@@ -535,6 +536,12 @@ const routes = [
     layout: App,
     title: 'AB Testing',
     // supportDocSearch: 'ip pool'
+  },
+  {
+    path: '/ab-testing/create',
+    component: TestingCreatePage,
+    layout: App,
+    title: 'Create AB Test',
   },
   {
     path: '/ab-testing/:id/:version?',

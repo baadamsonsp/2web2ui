@@ -47,6 +47,11 @@ export default [
     icon: Code
   },
   {
+    label: 'A/B Testing',
+    to: '/ab-testing',
+    icon: Compare
+  },
+  {
     label: 'Lists',
     to: '/lists',
     icon: MailOutline,
@@ -65,11 +70,6 @@ export default [
     label: 'Webhooks',
     to: '/webhooks',
     icon: Language
-  },
-  {
-    label: 'AB Testing',
-    to: '/ab-testing',
-    icon: Compare
   },
   {
     label: 'Settings',

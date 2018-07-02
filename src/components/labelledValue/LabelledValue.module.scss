@@ -14,10 +14,11 @@
 
 .Label {
   display: inline-block;
-  line-height: rem(15);
+  line-height: rem(21);
+  color: color(gray, 2);
 
-  word-break: break-all;
-  word-wrap: break-word;
+  // word-break: break-all;
+  // word-wrap: break-word;
 }
 
 .Content {
@@ -32,6 +33,10 @@
     font-size: rem(15);
     line-height: rem(24);
     margin-bottom: 0;
+  }
+
+  p {
+    line-height: rem(21);
   }
 
   & > *:last-child {
