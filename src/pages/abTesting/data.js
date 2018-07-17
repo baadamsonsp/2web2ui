@@ -130,16 +130,25 @@ export default [
     winning_template_id: 'billing-alert_variant1',
     default_template: {
       template_id: 'default_billing-alert_template',
-      percent: 60
+      percent: 60,
+      count_unique_confirmed_opened: 1000,
+      count_accepted: 100000,
+      engagement_rate: 0.01
     },
     variants: [
       {
         template_id: 'billing-alert_variant1',
-        percent: 10
+        percent: 10,
+        count_unique_confirmed_opened: 489,
+        count_accepted: 9000,
+        engagement_rate: 0.054333
       },
       {
         template_id: 'billing-alert_variant2',
-        percent: 30
+        percent: 30,
+        count_unique_confirmed_opened: 320,
+        count_accepted: 68933,
+        engagement_rate: 0.004642
       }
     ],
     created_at: new Date(),

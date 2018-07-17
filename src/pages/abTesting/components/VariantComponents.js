@@ -18,24 +18,72 @@ export const VariantsPanels = ({ test, formValues }) => {
               <h6>{test.default_template.template_id}</h6>
             </LabelledValue>
             { test.default_template.sample_size &&
-              <LabelledValue label='Sample Size'><p><Unit unit='number' value={test.default_template.sample_size}/></p></LabelledValue>
+              <LabelledValue label='Sample Size'><p>{test.default_template.sample_size.toLocaleString()}</p></LabelledValue>
             }
             { test.default_template.percent &&
               <LabelledValue label='Percent'><p><Unit unit='percent' value={test.default_template.percent}/></p></LabelledValue>
             }
           </Panel.Section>
+            {
+              test.default_template.engagement_rate &&
+              <Panel.Section>
+                <LabelledValue label='Engagement'>
+                  <h6><Unit unit='percent' value={test.default_template.engagement_rate}/></h6>
+                  <small>
+                    {
+                      test.default_template.count_unique_confirmed_opened &&
+                      <Fragment>
+                        {test.default_template.count_unique_confirmed_opened.toLocaleString()} opens of {test.default_template.count_accepted.toLocaleString()} accepted
+                      </Fragment>
+                    }
+                    {
+                      test.default_template.count_unique_clicked &&
+                      <Fragment>
+                        {test.default_template.count_unique_clicked.toLocaleString()} clicks of {test.default_template.count_accepted.toLocaleString()} accepted
+                      </Fragment>
+                    }
+                  </small>
+                </LabelledValue>
+              </Panel.Section>
+            }
         </Panel>
-        <Panel>
+
           {
-            test.variants.map(({ template_id, sample_size, percent}, i) => (
+            test.variants.map(({ template_id, sample_size, percent, engagement_rate, count_unique_confirmed_opened, count_unique_clicked, count_accepted}, i) => (
+              <Panel>
               <Panel.Section actions={[{ content: 'View Template', color: 'orange' }]} key={i}>
                 <LabelledValue label='Template ID' value={template_id} />
-                {sample_size && <LabelledValue label='Sample Size'><p><Unit unit='number' value={sample_size}/></p></LabelledValue>}
+                {sample_size && <LabelledValue label='Sample Size'><p>{sample_size.toLocaleString()}</p></LabelledValue>}
                 {percent && <LabelledValue label='Percent'><p><Unit unit='percent' value={percent}/></p></LabelledValue>}
-              </Panel.Section>
+                </Panel.Section>
+                {engagement_rate &&
+                  <Panel.Section>
+                  {
+                    engagement_rate &&
+                    <LabelledValue label='Engagement'>
+                      <h6><Unit unit='percent' value={engagement_rate}/></h6>
+                      <small>
+                        {
+                          count_unique_confirmed_opened &&
+                          <Fragment>
+                            {count_unique_confirmed_opened.toLocaleString()} opens of {count_accepted.toLocaleString()} accepted
+                          </Fragment>
+                        }
+                        {
+                          count_unique_clicked &&
+                          <Fragment>
+                            {count_unique_clicked.toLocaleString()} clicks of {count_accepted.toLocaleString()} accepted
+                            {' '}clicks
+                          </Fragment>
+                        }
+                      </small>
+                    </LabelledValue>
+                  }
+                </Panel.Section>
+              }
+              </Panel>
             ))
           }
-        </Panel>
       </Fragment>
     )
   }
