@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
-import { Page, Tag, UnstyledLink, ActionList, Popover, Select, Panel, Button, Label, TextField, Grid } from '@sparkpost/matchbox';
-import { Add } from '@sparkpost/matchbox-icons'
+import { Page, Tag, UnstyledLink, ActionList, Popover, Select, Panel, Button, Label, TextField, Grid, Tooltip } from '@sparkpost/matchbox';
+import { Add, InfoOutline } from '@sparkpost/matchbox-icons'
 import { LabelledValue, Unit } from 'src/components'
 import { Typeahead } from 'src/components/typeahead/Typeahead';
 
@@ -28,21 +28,21 @@ export const VariantsPanels = ({ test, formValues }) => {
               test.default_template.engagement_rate &&
               <Panel.Section>
                 <LabelledValue label='Engagement'>
-                  <h6><Unit unit='percent' value={test.default_template.engagement_rate}/></h6>
-                  <small>
-                    {
-                      test.default_template.count_unique_confirmed_opened &&
-                      <Fragment>
-                        {test.default_template.count_unique_confirmed_opened.toLocaleString()} opens of {test.default_template.count_accepted.toLocaleString()} accepted
-                      </Fragment>
-                    }
-                    {
-                      test.default_template.count_unique_clicked &&
-                      <Fragment>
-                        {test.default_template.count_unique_clicked.toLocaleString()} clicks of {test.default_template.count_accepted.toLocaleString()} accepted
-                      </Fragment>
-                    }
-                  </small>
+                  <h6>
+                    <Tooltip dark content={(() => {
+                      if (test.default_template.count_unique_confirmed_opened) {
+                        return <span>{test.default_template.count_unique_confirmed_opened.toLocaleString()} opens of {test.default_template.count_accepted.toLocaleString()} accepted</span>
+                      }
+                      if (test.default_template.count_unique_clicked) {
+                        return <span>{test.default_template.count_unique_clicked.toLocaleString()} clicks of {test.default_template.count_accepted.toLocaleString()} accepted</span>
+                      }
+                    })()
+                    }>
+                      <Unit unit='percent' value={test.default_template.engagement_rate}/>
+                      {' '}
+                      <span style={{ color: '#aaaaaf' }}><InfoOutline /></span>
+                    </Tooltip>
+                  </h6>
                 </LabelledValue>
               </Panel.Section>
             }
@@ -61,22 +61,21 @@ export const VariantsPanels = ({ test, formValues }) => {
                   {
                     engagement_rate &&
                     <LabelledValue label='Engagement'>
-                      <h6><Unit unit='percent' value={engagement_rate}/></h6>
-                      <small>
-                        {
-                          count_unique_confirmed_opened &&
-                          <Fragment>
-                            {count_unique_confirmed_opened.toLocaleString()} opens of {count_accepted.toLocaleString()} accepted
-                          </Fragment>
-                        }
-                        {
-                          count_unique_clicked &&
-                          <Fragment>
-                            {count_unique_clicked.toLocaleString()} clicks of {count_accepted.toLocaleString()} accepted
-                            {' '}clicks
-                          </Fragment>
-                        }
-                      </small>
+                      <h6>
+                        <Tooltip dark content={(() => {
+                          if (count_unique_confirmed_opened) {
+                            return <span>{count_unique_confirmed_opened.toLocaleString()} opens of {count_accepted.toLocaleString()} accepted</span>
+                          }
+                          if (count_unique_clicked) {
+                            return <span>{count_unique_clicked.toLocaleString()} clicks of {count_accepted.toLocaleString()} accepted</span>
+                          }
+                        })()
+                        }>
+                          <Unit unit='percent' value={engagement_rate}/>
+                          {' '}
+                          <span style={{ color: '#aaaaaf' }}><InfoOutline /></span>
+                        </Tooltip>
+                      </h6>
                     </LabelledValue>
                   }
                 </Panel.Section>
