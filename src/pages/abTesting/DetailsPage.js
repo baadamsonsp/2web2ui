@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { reduxForm, Field, getFormValues } from 'redux-form';
 import { Page, UnstyledLink, Panel, Button } from '@sparkpost/matchbox';
-import { OpenInNew } from '@sparkpost/matchbox-icons';
-import { LabelledValue } from 'src/components'
+import { OpenInNew, Save, Delete } from '@sparkpost/matchbox-icons';
+import { LabelledValue } from 'src/components';
 
 import Section from './components/Section';
-import { StatusPanel, StatusDatesPanel } from './components/StatusComponents'
+import { StatusPanel, StatusDatesPanel } from './components/StatusComponents';
 import { SettingsPanel } from './components/SettingsComponents';
 import { VariantsPanels } from './components/VariantComponents';
 import styles from './DetailsPage.module.scss';
@@ -25,7 +25,7 @@ class DetailsPage extends Component {
     const { test } = this.props;
 
     if (test.test_mode === 'bayesian' && test.audience_selection === 'sample_size') {
-      return ', confidence level, or sample size'
+      return ', confidence level, or sample size';
     }
     if (test.test_mode === 'bayesian') {
       return ', or confidence level';
@@ -44,6 +44,7 @@ class DetailsPage extends Component {
     let settingsContent = null;
 
     if (test.status === 'draft') {
+      primaryAction = { content: 'Schedule Test' };
       statusContent = <p>To begin this test, schedule a start and end date.</p>;
       settingsContent = <React.Fragment><p>You may continue to adjust these settings and template variants while this test is in draft mode.</p>{learnMore}</React.Fragment>;
     }
@@ -85,7 +86,8 @@ class DetailsPage extends Component {
         primaryAction={primaryAction}
         secondaryActions={[
           { content: 'Cancel Test', visible: test.status === 'running' },
-          { content: 'Delete Test' },
+          { content: <span><Delete/> Delete Test</span> },
+          { content: <span><Save/> Save as Draft</span>, visible: test.status === 'draft' },
           { content: 'Override Default Template', visible: !!test.winning_template_id }
         ]}>
 
@@ -101,12 +103,12 @@ class DetailsPage extends Component {
                   <LabelledValue label='Winner'>
                     <h6>{test.winning_template_id}</h6>
                     {
-                      test.winning_template_id === test.default_template.template_id
-                      && <p className={styles.HelpText}>No winner was found.</p>
+                      test.winning_template_id === test.default_template.template_id &&
+                      <p className={styles.HelpText}>No winner was found.</p>
                     }
                     {
-                      (test.winning_template_id !== test.default_template.template_id && test.test_mode === 'bayesian')
-                      && <p className={styles.HelpText}>This variant is now being sent by default.</p>
+                      (test.winning_template_id !== test.default_template.template_id && test.test_mode === 'bayesian') &&
+                      <p className={styles.HelpText}>This variant is now being sent by default.</p>
                     }
                   </LabelledValue>
                 </Panel.Section>
