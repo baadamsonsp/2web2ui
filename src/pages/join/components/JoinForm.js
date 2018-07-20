@@ -97,7 +97,7 @@ export class JoinForm extends Component {
           validate={[required, email]}
           disabled={!reCaptchaReady || loading}
           autoComplete='username email'
-          placeholder='leslie.knope@pawnee.indiana.state.us.gov'
+          placeholder='username@email.com'
         />
         <Field
           name='password'
@@ -132,10 +132,10 @@ export class JoinForm extends Component {
         </Checkbox.Group>
 
         <Button primary
-          disabled={loading || pristine || invalid || !reCaptchaReady }
+          disabled={loading || pristine || invalid || !reCaptchaReady}
           onClick={this.executeRecaptcha}
         >
-          { loading ? 'Loading' : 'Create Account' }
+          {loading ? 'Loading' : 'Create Account'}
         </Button>
 
         <Recaptcha
