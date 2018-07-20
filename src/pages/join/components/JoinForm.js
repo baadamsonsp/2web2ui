@@ -100,7 +100,7 @@ export class JoinForm extends Component {
           validate={[required, email]}
           disabled={pending}
           autoComplete='username email'
-          placeholder='leslie.knope@pawnee.indiana.state.us.gov'
+          placeholder='username@email.com'
         />
         <Field
           name='password'
@@ -135,7 +135,11 @@ export class JoinForm extends Component {
         </Checkbox.Group>
 
         <Button primary
+<<<<<<< HEAD
           disabled={pending || pristine || invalid}
+=======
+          disabled={loading || pristine || invalid || !reCaptchaReady}
+>>>>>>> FE-377 - Remove "Leslie Knope" of parks and rec from sign-up page :-(
           onClick={this.executeRecaptcha}
         >
           {loading ? 'Loading' : 'Create Account'}
