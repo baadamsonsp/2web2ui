@@ -100,7 +100,7 @@ export class JoinForm extends Component {
           validate={[required, email]}
           disabled={pending}
           autoComplete='username email'
-          placeholder='username@email.com'
+          placeholder='leslie.knope@pawnee.indiana.state.gov'
         />
         <Field
           name='password'

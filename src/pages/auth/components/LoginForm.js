@@ -19,7 +19,7 @@ export class LoginForm extends Component {
           name='username'
           id='username'
           label='Email or Username'
-          placeholder='username@email.com'
+          placeholder='email@example.com'
           component={TextFieldWrapper}
           validate={required}
         />
