@@ -42,7 +42,7 @@ exports[`JoinForm render disables form when loading 1`] = `
     disabled={true}
     label="Email"
     name="email"
-    placeholder="username@email.com"
+    placeholder="leslie.knope@pawnee.indiana.state.gov"
     validate={
       Array [
         [Function],
@@ -168,7 +168,7 @@ exports[`JoinForm render disables form when recaptcha is not loaded 1`] = `
     disabled={true}
     label="Email"
     name="email"
-    placeholder="username@email.com"
+    placeholder="leslie.knope@pawnee.indiana.state.gov"
     validate={
       Array [
         [Function],
@@ -294,7 +294,7 @@ exports[`JoinForm render enables form correctly 1`] = `
     disabled={false}
     label="Email"
     name="email"
-    placeholder="username@email.com"
+    placeholder="leslie.knope@pawnee.indiana.state.gov"
     validate={
       Array [
         [Function],
